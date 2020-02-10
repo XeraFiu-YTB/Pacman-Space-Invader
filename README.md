@@ -1,5 +1,5 @@
 # Pacman-Space-Invader
-Ce jeux est un Pacman revisité.
+Ce jeux est un Pacman revisité avec l'ajout d'une petite histoire afin d'intégrer un Space Invaders
 # Histoire
 Pacman apprend que sa ville va être attaqué par une armée de fantôme, il décide d'aller à l'armurerie pour y voler des munitions mais cette salle est protégé par des gardes.
 
