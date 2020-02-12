@@ -1,0 +1,32 @@
+#buttonZone {
+	width: 420px;
+	height: 420px;
+}
+
+#apercu {
+	width: 420px;
+	height: 420px;
+}
+
+.buttonClass {
+	width: 20px;
+	height: 20px;
+}
+
+#builder {
+	display: flex;
+	align-items: row;
+	justify-content: space-around;
+	height: 500px;
+	width: 1000px;
+}
+
+section {
+	border: 4px solid black;
+	margin: 30px;
+}
+
+canvas {
+	width: 420px;
+	height: 420px;
+}
