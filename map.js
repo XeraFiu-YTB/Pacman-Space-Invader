@@ -8,19 +8,47 @@ var imgPac = new Image();
 imgPac.src = "assets/images/pacman.png";
 var imgFan = new Image();
 imgFan.src = "assets/images/fantome.png";
-var pacmanCoords = {"x":220,"y":220}
+var pacmanCoords = {"x":200,"y":200}
 var possibilite = {"gauche":false,"droite":false,"haut":false,"bas":false}
 var animer
 var tourBoucle = 0
 
 function demarrer () { 
 	creerButtonMap()
-	/*for(var i=0; i<441;i++) {
-		document.getElementById('c'+i).addEventListener('click', changerMap)
-	}*/
+	document.getElementById('x200y200').classList.add('jaune')
+	for(var i=0; i<441;i++) {
+		document.getElementById(idMap[i]).addEventListener('mousedown', activerOver)
+		document.getElementById(idMap[i]).addEventListener('mouseup', retirerOver)
+		document.getElementById(idMap[i]).classList.add('noir')
+	}
 	document.getElementById('exporter').addEventListener('click', creationMap)
 	window.addEventListener('keydown', pacmanMouvement)
 	pacman()
+}
+
+function activerOver() {
+	for(var i=0; i<441;i++) {
+		document.getElementById(idMap[i]).addEventListener('mouseover', changerMap)
+	}
+	//on fait également la case cliqué
+	if(this.value == 1) {
+		this.value = 0
+		this.classList.add("caseNoir")
+		var position = murs.indexOf(this.id)
+		if(position != -1) {murs.splice(position, 1)}
+	} else {
+		this.value = 1
+		this.classList.add("bleu")
+		murs.push(`${this.id}`)
+	}
+	mapEntiere[this.id]["valeur"] = this.value
+	apercu()
+}
+
+function retirerOver() {
+	for(var i=0; i<441;i++) {
+		document.getElementById(idMap[i]).removeEventListener('mouseover', changerMap)
+	}
 }
 
 function creerButtonMap() {
@@ -45,7 +73,7 @@ function creerButtonMap() {
 		input.value = 0;
 		input.className = 'buttonClass';
 		input.type = 'button';
-		input.addEventListener('click', changerMap)
+		//input.addEventListener('click', changerMap)
 		//Récupération de la section ou l'on va mettre l'input
 		var section = document.getElementById('buttonZone');
 		//On place l'input dans la section
@@ -58,11 +86,13 @@ function creerButtonMap() {
 function changerMap() {
 	if(this.value == 1) {
 		this.value = 0
+		this.classList.add("noir")
 		var position = murs.indexOf(this.id)
 		if(position != -1) {murs.splice(position, 1)}
 	} else {
 		this.value = 1
 		murs.push(`${this.id}`)
+		this.classList.add("bleu")
 	}
 	mapEntiere[this.id]["valeur"] = this.value
 	console.log(murs)
@@ -173,10 +203,17 @@ function pacman() {
 	//Verifcation des colisions
 	collision(pacmanCoords.x,pacmanCoords.y)
 	//Prend le chemin suivant
-	if(bloquageDirection == true && possibilite.haut == false && possibilite.bas == false && possibilite.haut == false && possibilite.bas == false) {
+	var deplacement = nextPacmanDirection
+	if(bloquageDirection == true/* && possibilite.deplacement == false*/) {
 		var xValid = pacmanCoords.x%20
 		var yValid = pacmanCoords.y%20
-		if(xValid == 0 && yValid == 0) {pacmanDirection = nextPacmanDirection}
+		if(xValid == 0 && yValid == 0) {
+			if(possibilite.gauche == false && nextPacmanDirection == "gauche") {pacmanDirection = nextPacmanDirection}
+			if(possibilite.droite == false && nextPacmanDirection == "droite") {pacmanDirection = nextPacmanDirection}
+			if(possibilite.haut == false && nextPacmanDirection == "haut") {pacmanDirection = nextPacmanDirection}
+			if(possibilite.bas == false && nextPacmanDirection == "bas") {pacmanDirection = nextPacmanDirection}
+		
+		}
 	}
 	switch(pacmanDirection) {
 		case 'gauche':
@@ -198,7 +235,7 @@ function pacman() {
   			}
   		break;
 	}
-	console.log(`x:${pacmanCoords.x} | y:${pacmanCoords.y}`)
+	//console.log(`x:${pacmanCoords.x} | y:${pacmanCoords.y}`)
 	ctx.drawImage(imgPac,pacmanCoords.x,pacmanCoords.y,20,20);//x,y,width,height
 animer = window.requestAnimationFrame(pacman);	
 

@@ -30,3 +30,15 @@ canvas {
 	width: 420px;
 	height: 420px;
 }
+
+.noir {
+	background-color: black;
+}
+
+.bleu {
+	background-color: blue;
+}
+
+.jaune {
+	background-color: yellow;
+}
