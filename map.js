@@ -33,7 +33,7 @@ function activerOver() {
 	//on fait également la case cliqué
 	if(this.value == 1) {
 		this.value = 0
-		this.classList.add("caseNoir")
+		this.classList.add("noir")
 		var position = murs.indexOf(this.id)
 		if(position != -1) {murs.splice(position, 1)}
 	} else {
